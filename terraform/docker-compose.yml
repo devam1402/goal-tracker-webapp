@@ -1,0 +1,41 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:15
+    container_name: goals-postgres
+    environment:
+      POSTGRES_DB: goalsdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  backend:
+    image: fastapi-prod:latest
+    container_name: fastapi-prod
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASS: postgres
+      DB_NAME: goalsdb
+    ports:
+      - "8000:8000"
+
+  frontend:
+    image: goal-frontend:latest
+    container_name: goal-frontend
+    depends_on:
+      - backend
+    environment:
+      BACKEND_URL: http://backend:8000
+    ports:
+      - "3000:8501"
+
+volumes:
+  db_data:

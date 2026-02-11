@@ -1,0 +1,23 @@
+
+# Terraform
+terraform/.terraform/
+terraform/*.tfstate*
+terraform/.terraform.lock.hcl
+terraform/terraform.tfvars
+
+# Python
+backend/.venv/
+__pycache__/
+*.pyc
+
+# Logs
+logs/
+
+# Docker
+*.log
+
+# Keys
+*.pem
+
+# OS
+.DS_Store
